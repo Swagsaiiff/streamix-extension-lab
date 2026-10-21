@@ -1,0 +1,40 @@
+{
+  "repository": {
+    "id": "org.streamix.repository.lab",
+    "name": "Streamix Lab Local Repository",
+    "version": "1.0.0",
+    "description": "Reference extension repository for Streamix Desktop extension lab testing",
+    "manifestVersion": 1,
+    "homepageUrl": "https://github.com/Swagsaiiff/streamix-desktop/tree/main/streamix-extension-lab"
+  },
+  "updatedAt": "2026-10-21T10:30:00.146Z",
+  "extensions": [
+    {
+      "id": "org.streamix.provider.sample",
+      "displayName": "Streamix Open Lab Fixture Provider",
+      "version": "1.0.0",
+      "streamixApiVersion": "^1.0.0",
+      "description": "Reference development sample provider for testing extension SDK interfaces using open public test media and controlled fixtures.",
+      "author": {
+        "name": "Streamix Core Team",
+        "url": "https://github.com/recloudstream/cloudstream"
+      },
+      "contentTypes": [
+        "movie",
+        "series"
+      ],
+      "languages": [
+        "en"
+      ],
+      "packageUrl": "packages/org.streamix.provider.sample-1.0.0.streamix-ext",
+      "packageSha256": "245d10f2de319701a29bc4be0999c5a049b5933671cf8009bd663d586b4cdfe6",
+      "packageSizeBytes": 3734,
+      "permissions": [
+        "network:fetch",
+        "storage:local"
+      ],
+      "releaseDate": "2026-10-21T10:30:00.146Z",
+      "icon": "assets/icon.png"
+    }
+  ]
+}

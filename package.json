@@ -1,0 +1,20 @@
+{
+  "name": "streamix-extension-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Standalone Streamix Extension Development Lab & SDK",
+  "scripts": {
+    "build:sdk": "tsc --noEmit",
+    "validate:manifest": "node --experimental-strip-types tools/validator-cli.ts",
+    "package:sample": "node --experimental-strip-types tools/packager.ts examples/sample-provider packages",
+    "build:repo": "node --experimental-strip-types tools/repo-builder.ts repository packages",
+    "harness": "node --experimental-strip-types tools/harness.ts",
+    "test": "node --experimental-strip-types --test tests/manifest-validation.test.ts tests/api-compatibility.test.ts tests/normalized-models.test.ts tests/error-and-timeout.test.ts tests/packager-and-integrity.test.ts tests/repository-index.test.ts examples/sample-provider/tests/sample-provider.test.ts",
+    "check": "npm run build:sdk && npm test"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "typescript": "^5.8.2"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@streamix/extension-sample-provider",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Streamix Open Lab Reference Extension",
+  "scripts": {
+    "test": "node --experimental-strip-types --test tests/**/*.test.ts"
+  }
+}
