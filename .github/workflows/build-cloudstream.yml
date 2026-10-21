@@ -1,0 +1,111 @@
+name: Build CloudStream Extensions
+
+concurrency:
+  group: cloudstream-build-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'cloudstream-compatible/**'
+      - '.github/workflows/build-cloudstream.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          path: "repo"
+
+      - name: Checkout Builds Branch
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: "builds"
+          path: "builds"
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Prepare Local Properties
+        env:
+          SIMKL_API: ${{ secrets.SIMKL_API }}
+          TMDB_KEY: ${{ secrets.TMDB_KEY }}
+          CASTLE_KEY: ${{ secrets.CASTLE_KEY }}
+          MOVIEBLAST_TOKEN: ${{ secrets.MOVIEBLAST_TOKEN }}
+          MOVIEBLAST_API: ${{ secrets.MOVIEBLAST_API }}
+          MOVIEBLAST_KEY: ${{ secrets.MOVIEBLAST_KEY }}
+        run: |
+          cd repo/cloudstream-compatible
+          touch local.properties
+          echo "SIMKL_API=${SIMKL_API:-}" >> local.properties
+          echo "TMDB_KEY=${TMDB_KEY:-}" >> local.properties
+          echo "CASTLE_KEY=${CASTLE_KEY:-}" >> local.properties
+          echo "MOVIEBLAST_TOKEN=${MOVIEBLAST_TOKEN:-}" >> local.properties
+          echo "MOVIEBLAST_API=${MOVIEBLAST_API:-}" >> local.properties
+          echo "MOVIEBLAST_KEY=${MOVIEBLAST_KEY:-}" >> local.properties
+
+      - name: Build CloudStream Plugins
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          cd repo/cloudstream-compatible
+          chmod +x gradlew
+          ./gradlew make makePluginsJson --stacktrace
+
+      - name: Stage Artifacts for Publishing
+        run: |
+          mkdir -p stage_builds
+          # Copy built .cs3 files and generated plugins.json
+          find repo/cloudstream-compatible -name "*.cs3" -exec cp {} stage_builds/ \;
+          cp repo/cloudstream-compatible/build/plugins.json stage_builds/ 2>/dev/null || cp repo/cloudstream-compatible/builds/plugins.json stage_builds/
+          
+          # Ensure repo.json exists in stage
+          cp repo/cloudstream-compatible/builds/repo.json stage_builds/repo.json
+          cp repo/cloudstream-compatible/builds/CS.json stage_builds/CS.json
+
+      - name: Verify Artifacts and SHA-256 Checksums
+        run: |
+          cd stage_builds
+          echo "=== Verifying Artifacts ==="
+          ls -lh
+          for file in *.cs3; do
+            echo "Checksum for $file:"
+            sha256sum "$file"
+          done
+
+      - name: Publish to builds Branch
+        run: |
+          cd repo
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          
+          # Check if builds branch exists locally or remotely
+          git fetch origin builds:builds || git checkout --orphan builds
+          git checkout builds
+          
+          # Clean old artifacts and copy newly staged files
+          rm -f *.cs3 plugins.json repo.json CS.json
+          cp ../stage_builds/* .
+          
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes in build artifacts."
+          else
+            git commit -m "Automated CloudStream build for ${GITHUB_SHA}"
+            git push origin builds
+          fi

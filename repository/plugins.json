@@ -7,7 +7,7 @@
     "manifestVersion": 1,
     "homepageUrl": "https://github.com/Swagsaiiff/streamix-desktop/tree/main/streamix-extension-lab"
   },
-  "updatedAt": "2026-10-21T10:30:00.146Z",
+  "updatedAt": "2026-10-21T10:54:56.193Z",
   "extensions": [
     {
       "id": "org.streamix.provider.sample",
@@ -33,7 +33,7 @@
         "network:fetch",
         "storage:local"
       ],
-      "releaseDate": "2026-10-21T10:30:00.146Z",
+      "releaseDate": "2026-10-21T10:54:56.193Z",
       "icon": "assets/icon.png"
     }
   ]

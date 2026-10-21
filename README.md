@@ -170,9 +170,29 @@ The resulting `plugins.json` lists extension metadata, download URLs, and SHA-25
 
 ---
 
+## CloudStream-Compatible Extensions & Single Repository URL
+
+The lab includes a complete CloudStream 3 compatible subproject in [`cloudstream-compatible/`](./cloudstream-compatible/README.md) hosting 5 migrated community providers:
+- **Bollyflix** (v33)
+- **CineStream** (v487)
+- **MoviesDrive** (v33)
+- **Moviesmod** (v33)
+- **VegaMovies** (v82)
+
+### Single CloudStream Repository URL:
+```text
+https://raw.githubusercontent.com/Swagsaiiff/streamix-extension-lab/builds/repo.json
+```
+*(Or alias: `https://raw.githubusercontent.com/Swagsaiiff/streamix-extension-lab/builds/CS.json`)*
+
+In CloudStream: **Settings** → **Extensions** → **Add Repository** → Paste the URL above → Tap **Download**.
+
+---
+
 ## Future Streamix Application Integration
 
 This lab provides the foundation for future integration:
 1. **Main Process Extension Host**: Electron main process will manage downloading, verifying (SHA-256), and staging extension bundles in user data directories.
 2. **Server-Side Execution**: Node server will execute extensions in an isolated runner with timeouts and permission gates, mapping results to the internal Streamix playback pipeline.
 3. **Desktop Settings UI**: A new "Extensions" panel will allow users to add repository URLs (e.g., GitHub raw URLs) and install/update extensions with one click.
+

@@ -11,7 +11,8 @@
     "build:repo": "node --experimental-strip-types tools/repo-builder.ts repository packages",
     "harness": "node --experimental-strip-types tools/harness.ts",
     "test": "node --experimental-strip-types --test tests/manifest-validation.test.ts tests/api-compatibility.test.ts tests/normalized-models.test.ts tests/error-and-timeout.test.ts tests/packager-and-integrity.test.ts tests/repository-index.test.ts examples/sample-provider/tests/sample-provider.test.ts",
-    "check": "npm run build:sdk && npm test"
+    "verify:cloudstream": "node --experimental-strip-types cloudstream-compatible/tools/verify-repository.ts",
+    "check": "npm run build:sdk && npm test && npm run verify:cloudstream"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",
