@@ -1,0 +1,10 @@
+{
+  "name": "@streamix-ext/cinestream",
+  "version": "1.0.0",
+  "description": "Streamix native provider extension for CineStream",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "node --experimental-strip-types --test tests/cinestream.test.ts"
+  }
+}

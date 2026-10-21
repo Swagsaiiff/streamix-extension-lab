@@ -1,0 +1,28 @@
+{
+  "id": "org.streamix.provider.moviesdrive",
+  "displayName": "MoviesDrive",
+  "version": "1.0.0",
+  "description": "High Quality Movies and TV Shows up to 4K in Hindi and English. Ported from CSX MoviesDrive.",
+  "author": {
+    "name": "megix / Streamix Team",
+    "url": "https://github.com/SaurabhKaperwan/CSX"
+  },
+  "streamixApiVersion": "^1.0.0",
+  "entrypoint": "src/index.ts",
+  "contentTypes": [
+    "movie",
+    "series",
+    "anime"
+  ],
+  "languages": [
+    "hi",
+    "en"
+  ],
+  "permissions": [
+    "network:fetch",
+    "storage:local"
+  ],
+  "icon": "assets/icon.png",
+  "repositoryUrl": "https://github.com/Swagsaiiff/streamix-extension-lab",
+  "homepageUrl": "https://github.com/SaurabhKaperwan/CSX"
+}

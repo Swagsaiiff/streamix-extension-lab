@@ -31,6 +31,7 @@ export class ExtensionRunner {
   public readonly manifest: ExtensionManifest;
   private readonly extension: StreamixExtension;
   private readonly defaultTimeoutMs: number;
+  private readonly contextOptions?: Partial<CreateContextOptions>;
   private isInitialized = false;
 
   constructor(options: RunnerOptions) {
@@ -40,6 +41,7 @@ export class ExtensionRunner {
     this.manifest = options.manifest;
     this.extension = options.extension;
     this.defaultTimeoutMs = options.defaultTimeoutMs ?? 10_000;
+    this.contextOptions = options.contextOptions;
   }
 
   private async withTimeout<T>(
@@ -84,6 +86,7 @@ export class ExtensionRunner {
   async initialize(contextOverrides?: Partial<CreateContextOptions>): Promise<void> {
     const context = createExtensionContext({
       manifest: this.manifest,
+      ...this.contextOptions,
       ...contextOverrides
     });
 

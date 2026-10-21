@@ -8,11 +8,17 @@
     "build:sdk": "tsc --noEmit",
     "validate:manifest": "node --experimental-strip-types tools/validator-cli.ts",
     "package:sample": "node --experimental-strip-types tools/packager.ts examples/sample-provider packages",
+    "package:bollyflix": "node --experimental-strip-types tools/packager.ts packages/bollyflix packages",
+    "package:cinestream": "node --experimental-strip-types tools/packager.ts packages/cinestream packages",
+    "package:moviesdrive": "node --experimental-strip-types tools/packager.ts packages/moviesdrive packages",
+    "package:moviesmod": "node --experimental-strip-types tools/packager.ts packages/moviesmod packages",
+    "package:vegamovies": "node --experimental-strip-types tools/packager.ts packages/vegamovies packages",
+    "package:all": "npm run package:sample && npm run package:bollyflix && npm run package:cinestream && npm run package:moviesdrive && npm run package:moviesmod && npm run package:vegamovies && npm run build:repo",
     "build:repo": "node --experimental-strip-types tools/repo-builder.ts repository packages",
     "harness": "node --experimental-strip-types tools/harness.ts",
-    "test": "node --experimental-strip-types --test tests/manifest-validation.test.ts tests/api-compatibility.test.ts tests/normalized-models.test.ts tests/error-and-timeout.test.ts tests/packager-and-integrity.test.ts tests/repository-index.test.ts examples/sample-provider/tests/sample-provider.test.ts",
+    "test": "node --experimental-strip-types --test tests/manifest-validation.test.ts tests/api-compatibility.test.ts tests/normalized-models.test.ts tests/error-and-timeout.test.ts tests/packager-and-integrity.test.ts tests/repository-index.test.ts examples/sample-provider/tests/sample-provider.test.ts packages/bollyflix/tests/bollyflix.test.ts packages/cinestream/tests/cinestream.test.ts packages/moviesdrive/tests/moviesdrive.test.ts packages/moviesmod/tests/moviesmod.test.ts packages/vegamovies/tests/vegamovies.test.ts",
     "verify:cloudstream": "node --experimental-strip-types cloudstream-compatible/tools/verify-repository.ts",
-    "check": "npm run build:sdk && npm test && npm run verify:cloudstream"
+    "check": "npm run build:sdk && npm test && npm run package:all && npm run verify:cloudstream"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",

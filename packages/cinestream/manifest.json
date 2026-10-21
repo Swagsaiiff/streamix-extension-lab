@@ -1,0 +1,28 @@
+{
+  "id": "org.streamix.provider.cinestream",
+  "displayName": "CineStream",
+  "version": "1.0.0",
+  "description": "Comprehensive Stremio & Cinemeta Catalog & Stream Provider for Movies, Series, Anime, and AsianDrama. Ported from CSX CineStream.",
+  "author": {
+    "name": "megix / Streamix Team",
+    "url": "https://github.com/SaurabhKaperwan/CSX"
+  },
+  "streamixApiVersion": "^1.0.0",
+  "entrypoint": "src/index.ts",
+  "contentTypes": [
+    "movie",
+    "series",
+    "anime"
+  ],
+  "languages": [
+    "en",
+    "hi"
+  ],
+  "permissions": [
+    "network:fetch",
+    "storage:local"
+  ],
+  "icon": "assets/icon.png",
+  "repositoryUrl": "https://github.com/Swagsaiiff/streamix-extension-lab",
+  "homepageUrl": "https://github.com/SaurabhKaperwan/CSX"
+}

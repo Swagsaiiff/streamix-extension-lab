@@ -170,29 +170,60 @@ The resulting `plugins.json` lists extension metadata, download URLs, and SHA-25
 
 ---
 
+## Native Streamix Ported Providers
+
+All 5 providers from the upstream CSX repository have been ported into the native Streamix TypeScript extension ecosystem under `packages/`:
+
+| Provider | Extension ID | Target Types | Source Base URL | Status | Package |
+|---|---|---|---|---|---|
+| **Bollyflix** | `org.streamix.provider.bollyflix` | `movie`, `series`, `anime` | `https://bollyflix.co.za` | Build & Fixture Tested; Live tested | `packages/org.streamix.provider.bollyflix-1.0.0.streamix-ext` |
+| **CineStream** | `org.streamix.provider.cinestream` | `movie`, `series`, `anime` | `https://v3-cinemeta.strem.io` | Build & Fixture Tested; Live tested | `packages/org.streamix.provider.cinestream-1.0.0.streamix-ext` |
+| **MoviesDrive** | `org.streamix.provider.moviesdrive` | `movie`, `series`, `anime` | `https://new3.moviesdrive.beer` | Build & Fixture Tested; Live tested | `packages/org.streamix.provider.moviesdrive-1.0.0.streamix-ext` |
+| **Moviesmod** | `org.streamix.provider.moviesmod` | `movie`, `series`, `anime` | `https://moviesmod.uk.com` | Build & Fixture Tested; Live tested | `packages/org.streamix.provider.moviesmod-1.0.0.streamix-ext` |
+| **VegaMovies** | `org.streamix.provider.vegamovies` | `movie`, `series`, `anime` | `https://1vegamovies.pics` | Build & Fixture Tested; Live tested | `packages/org.streamix.provider.vegamovies-1.0.0.streamix-ext` |
+
+### Upstream Attribution and License
+- **Original Implementations**: `megix` / Saurabh Kaperwan ([CSX Repository](https://github.com/SaurabhKaperwan/CSX))
+- **License**: GNU General Public License v3.0 (GPLv3).
+- Attribution and corresponding source availability are preserved in each package (`manifest.json`, `README.md`, `src/index.ts`).
+
+---
+
+## Native Streamix Repository Manifest & Index
+
+The native Streamix repository is generated directly from build artifacts in `repository/`:
+- **Repository Manifest**: `repository/repository.json`
+- **Extension Index**: `repository/plugins.json` (lists metadata, versions, SHA-256 checksums, and package byte sizes)
+- **Built Packages**: `repository/packages/*.streamix-ext`
+
+### Hosting Instructions:
+To host the Streamix native repository on GitHub Pages or GitHub Raw:
+1. Push `repository/` to GitHub (`main` or `gh-pages` branch).
+2. The single Streamix repository manifest URL is:
+   ```text
+   https://raw.githubusercontent.com/<owner>/<repo>/main/repository/repository.json
+   ```
+   Or GitHub Pages URL:
+   ```text
+   https://<owner>.github.io/<repo>/repository.json
+   ```
+
+---
+
 ## CloudStream-Compatible Extensions & Single Repository URL
 
-The lab includes a complete CloudStream 3 compatible subproject in [`cloudstream-compatible/`](./cloudstream-compatible/README.md) hosting 5 migrated community providers:
-- **Bollyflix** (v33)
-- **CineStream** (v487)
-- **MoviesDrive** (v33)
-- **Moviesmod** (v33)
-- **VegaMovies** (v82)
-
-### Single CloudStream Repository URL:
-```text
-https://raw.githubusercontent.com/Swagsaiiff/streamix-extension-lab/builds/repo.json
-```
-*(Or alias: `https://raw.githubusercontent.com/Swagsaiiff/streamix-extension-lab/builds/CS.json`)*
-
-In CloudStream: **Settings** → **Extensions** → **Add Repository** → Paste the URL above → Tap **Download**.
+The lab also includes a CloudStream 3 compatible subproject in [`cloudstream-compatible/`](./cloudstream-compatible/README.md) hosting `.cs3` packages:
+- **Single CloudStream Repository URL**:
+  ```text
+  https://raw.githubusercontent.com/Swagsaiiff/streamix-extension-lab/builds/repo.json
+  ```
 
 ---
 
 ## Future Streamix Application Integration
 
-This lab provides the foundation for future integration:
+This lab provides the foundation for future integration into Streamix Desktop:
 1. **Main Process Extension Host**: Electron main process will manage downloading, verifying (SHA-256), and staging extension bundles in user data directories.
 2. **Server-Side Execution**: Node server will execute extensions in an isolated runner with timeouts and permission gates, mapping results to the internal Streamix playback pipeline.
-3. **Desktop Settings UI**: A new "Extensions" panel will allow users to add repository URLs (e.g., GitHub raw URLs) and install/update extensions with one click.
+3. **Desktop Settings UI**: An "Extensions" panel will allow users to add repository URLs and install/update extensions with one click.
 

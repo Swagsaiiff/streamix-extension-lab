@@ -1,0 +1,10 @@
+{
+  "name": "@streamix-ext/vegamovies",
+  "version": "1.0.0",
+  "description": "Streamix native provider extension for VegaMovies",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "node --experimental-strip-types --test tests/vegamovies.test.ts"
+  }
+}

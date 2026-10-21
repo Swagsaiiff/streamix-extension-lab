@@ -1,0 +1,10 @@
+{
+  "name": "@streamix-ext/bollyflix",
+  "version": "1.0.0",
+  "description": "Streamix native provider extension for Bollyflix",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "node --experimental-strip-types --test tests/bollyflix.test.ts"
+  }
+}
