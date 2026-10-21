@@ -111,7 +111,7 @@ export class CineStreamExtension implements StreamixExtension {
     const sources: VideoSource[] = [];
     const subtitles: SubtitleItem[] = [];
 
-    // Query multi-source stream scrapers / Stremio stream endpoints
+    // Query stream endpoints for playable video sources
     const streamEndpoints: string[] = [];
 
     if (isSeries) {
@@ -126,7 +126,6 @@ export class CineStreamExtension implements StreamixExtension {
       );
     }
 
-    // Try each provider endpoint
     for (const endpoint of streamEndpoints) {
       try {
         const controller = new AbortController();
@@ -142,12 +141,12 @@ export class CineStreamExtension implements StreamixExtension {
 
         if (res.ok) {
           const html = await res.text();
-          // Match video stream or iframe src
-          const iframeMatch = /<iframe[^>]+src=["']([^"']+)["']/i.exec(html)
-            || /file:\s*["']([^"']+\.(?:m3u8|mp4)[^"']*)["']/i.exec(html);
+          // Extract direct video stream URLs only (m3u8 playlists or direct mp4/mkv files)
+          const fileMatch = /file:\s*["']([^"']+\.(?:m3u8|mp4)[^"']*)["']/i.exec(html)
+            || /https?:\/\/[^\s"'<>]+\.(?:m3u8|mp4)[^\s"'<>]*/i.exec(html);
 
-          if (iframeMatch) {
-            const streamUrl = iframeMatch[1];
+          if (fileMatch) {
+            const streamUrl = fileMatch[1] || fileMatch[0];
             sources.push({
               url: streamUrl,
               quality: '1080p',
@@ -165,21 +164,14 @@ export class CineStreamExtension implements StreamixExtension {
       }
     }
 
-    // Fallback direct stream endpoint if none resolved yet
+    // Do NOT return unverified embed URLs as direct streams.
+    // If no direct video streams were extracted, report honest availability error.
     if (sources.length === 0) {
-      const fallbackUrl = isSeries
-        ? `https://vidsrc.me/embed/tv?imdb=${imdbId}&season=${season}&episode=${episode}`
-        : `https://vidsrc.me/embed/movie?imdb=${imdbId}`;
-
-      sources.push({
-        url: fallbackUrl,
-        quality: '1080p',
-        format: 'hls',
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-          'Referer': 'https://v3-cinemeta.strem.io'
-        }
-      });
+      throw new SourceUnavailableError(
+        `No direct playable video streams could be resolved for item '${rawId}' (IMDb: '${imdbId}')`,
+        'STREAMS_EMPTY',
+        this.context?.manifest.id
+      );
     }
 
     return {

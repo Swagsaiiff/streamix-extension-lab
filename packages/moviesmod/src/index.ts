@@ -26,7 +26,8 @@ import {
   stripHtmlTags,
   decodeUrlParam,
   extractDriveleechSources,
-  extractGdflixSources
+  extractGdflixSources,
+  isVideoStreamUrl
 } from '../../../sdk/src/index.ts';
 
 export class MoviesmodExtension implements StreamixExtension {
@@ -223,7 +224,7 @@ export class MoviesmodExtension implements StreamixExtension {
         // Fallback
       }
 
-      if (sources.length === 0 && decodedUrl.startsWith('http')) {
+      if (sources.length === 0 && decodedUrl.startsWith('http') && isVideoStreamUrl(decodedUrl)) {
         sources.push({
           url: decodedUrl,
           quality: '1080p',

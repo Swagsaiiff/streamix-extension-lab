@@ -25,7 +25,8 @@ import {
   extractImdbId,
   stripHtmlTags,
   extractHubCloudSources,
-  extractGdflixSources
+  extractGdflixSources,
+  isVideoStreamUrl
 } from '../../../sdk/src/index.ts';
 
 interface SearchHit {
@@ -244,7 +245,7 @@ export class MoviesDriveExtension implements StreamixExtension {
         // Continue fallback
       }
 
-      if (sources.length === 0 && targetUrl.startsWith('http')) {
+      if (sources.length === 0 && isVideoStreamUrl(targetUrl)) {
         sources.push({
           url: targetUrl,
           quality: '1080p',

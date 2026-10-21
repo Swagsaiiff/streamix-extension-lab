@@ -176,4 +176,25 @@ describe('CineStream Extension - Unit & Fixture Tests', () => {
     assert.equal(result.sources[0].url, 'https://stream.example.com/master.m3u8');
     assert.equal(result.sources[0].format, 'hls');
   });
+
+  it('throws SourceUnavailableError when no playable streams are found instead of returning embed URLs', async () => {
+    const ext = createExtension();
+    const runner = new ExtensionRunner({
+      manifest,
+      extension: ext,
+      contextOptions: {
+        customFetch: async () => {
+          return new Response('<html><body>Only ads and no video file</body></html>', { status: 200 });
+        }
+      }
+    });
+
+    await runner.initialize();
+    await assert.rejects(
+      async () => runner.resolveSources({ mediaId: 'movie:tt1375666' }),
+      (err: unknown) => {
+        return (err as Error).message.includes('No direct playable video streams');
+      }
+    );
+  });
 });

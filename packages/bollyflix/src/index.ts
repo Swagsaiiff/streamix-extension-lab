@@ -26,7 +26,8 @@ import {
   extractAttribute,
   stripHtmlTags,
   extractGdflixSources,
-  bypassSidexfee
+  bypassSidexfee,
+  isVideoStreamUrl
 } from '../../../sdk/src/index.ts';
 
 export class BollyflixExtension implements StreamixExtension {
@@ -207,7 +208,7 @@ export class BollyflixExtension implements StreamixExtension {
     } else if (targetUrl.startsWith('http')) {
       // If direct or intermediate HTML page, try extracting
       sources = await extractGdflixSources(targetUrl, this.context?.fetch);
-      if (sources.length === 0) {
+      if (sources.length === 0 && isVideoStreamUrl(targetUrl)) {
         sources.push({
           url: targetUrl,
           quality: '1080p',

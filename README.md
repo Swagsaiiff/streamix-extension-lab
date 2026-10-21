@@ -2,7 +2,7 @@
 
 The **Streamix Extension Lab** is an isolated, standalone extension development project for building, packaging, testing, and distributing native video provider extensions for Streamix Desktop.
 
-Inspired by CloudStream's modular architecture, this project allows video providers to be authored, versioned, updated, and tested completely independently of the Streamix Desktop application and UI internals.
+Inspired by CloudStream's modular architecture, this project allows video providers to be authored, versioned, updated, and tested completely independently of the Streamix Desktop application and UI internals. Streamix extensions are 100% native TypeScript/JavaScript modules and do not require Android, Kotlin, Gradle, or the CloudStream application.
 
 > **Important**: This project is strictly isolated inside `streamix-extension-lab/`. It does not modify existing Streamix application files, provider registries, or dependency lockfiles.
 
@@ -16,7 +16,7 @@ Inspired by CloudStream's modular architecture, this project allows video provid
 - **Controlled Sample Extension**: A runnable reference provider (`examples/sample-provider`) using legitimate open media fixtures (Blender Foundation films and open HLS/VTT test streams).
 - **Independent Development Harness**: Test search, details, episode navigation, and source resolution without launching Electron or the React UI.
 - **Package & Integrity Verification**: Bundles extensions into `.streamix-ext` packages with cryptographic SHA-256 verification.
-- **Repository Ecosystem**: CloudStream-inspired repository manifest (`repository.json`) and plugin index (`plugins.json`) for distributing extensions.
+- **Repository Ecosystem**: Native repository manifest (`repository.json`) and plugin index (`plugins.json`) for distributing extensions.
 - **Documented Security Architecture**: Thorough threat analysis, permission gates, timeouts, cancellation, and production sandboxing roadmap.
 
 ---
@@ -104,7 +104,7 @@ Each extension requires a `manifest.json` at its root:
   "description": "Reference development sample provider for testing extension SDK interfaces.",
   "author": {
     "name": "Streamix Core Team",
-    "url": "https://github.com/recloudstream/cloudstream"
+    "url": "https://github.com/Swagsaiiff/streamix-extension-lab"
   },
   "streamixApiVersion": "^1.0.0",
   "entrypoint": "src/index.ts",
@@ -112,7 +112,7 @@ Each extension requires a `manifest.json` at its root:
   "languages": ["en"],
   "permissions": ["network:fetch", "storage:local"],
   "icon": "assets/icon.png",
-  "repositoryUrl": "https://github.com/Swagsaiiff/streamix-desktop"
+  "repositoryUrl": "https://github.com/Swagsaiiff/streamix-extension-lab"
 }
 ```
 
@@ -174,13 +174,13 @@ The resulting `plugins.json` lists extension metadata, download URLs, and SHA-25
 
 All 5 providers from the upstream CSX repository have been ported into the native Streamix TypeScript extension ecosystem under `packages/`:
 
-| Provider | Extension ID | Target Types | Source Base URL | Status | Package |
+| Provider | Extension ID | Target Types | Source Base URL | Verification Status | Package |
 |---|---|---|---|---|---|
-| **Bollyflix** | `org.streamix.provider.bollyflix` | `movie`, `series`, `anime` | `https://bollyflix.co.za` | Build & Fixture Tested; Live tested | `packages/org.streamix.provider.bollyflix-1.0.0.streamix-ext` |
-| **CineStream** | `org.streamix.provider.cinestream` | `movie`, `series`, `anime` | `https://v3-cinemeta.strem.io` | Build & Fixture Tested; Live tested | `packages/org.streamix.provider.cinestream-1.0.0.streamix-ext` |
-| **MoviesDrive** | `org.streamix.provider.moviesdrive` | `movie`, `series`, `anime` | `https://new3.moviesdrive.beer` | Build & Fixture Tested; Live tested | `packages/org.streamix.provider.moviesdrive-1.0.0.streamix-ext` |
-| **Moviesmod** | `org.streamix.provider.moviesmod` | `movie`, `series`, `anime` | `https://moviesmod.uk.com` | Build & Fixture Tested; Live tested | `packages/org.streamix.provider.moviesmod-1.0.0.streamix-ext` |
-| **VegaMovies** | `org.streamix.provider.vegamovies` | `movie`, `series`, `anime` | `https://1vegamovies.pics` | Build & Fixture Tested; Live tested | `packages/org.streamix.provider.vegamovies-1.0.0.streamix-ext` |
+| **Bollyflix** | `org.streamix.provider.bollyflix` | `movie`, `series`, `anime` | `https://bollyflix.co.za` | TypeScript build & fixtures passed; live extraction unverified | `packages/org.streamix.provider.bollyflix-1.0.0.streamix-ext` |
+| **CineStream** | `org.streamix.provider.cinestream` | `movie`, `series`, `anime` | `https://v3-cinemeta.strem.io` | TypeScript build & fixtures passed; direct streams only (no embed fallbacks); live extraction unverified | `packages/org.streamix.provider.cinestream-1.0.0.streamix-ext` |
+| **MoviesDrive** | `org.streamix.provider.moviesdrive` | `movie`, `series`, `anime` | `https://new3.moviesdrive.beer` | TypeScript build & fixtures passed; live extraction unverified | `packages/org.streamix.provider.moviesdrive-1.0.0.streamix-ext` |
+| **Moviesmod** | `org.streamix.provider.moviesmod` | `movie`, `series`, `anime` | `https://moviesmod.uk.com` | TypeScript build & fixtures passed; live extraction unverified | `packages/org.streamix.provider.moviesmod-1.0.0.streamix-ext` |
+| **VegaMovies** | `org.streamix.provider.vegamovies` | `movie`, `series`, `anime` | `https://1vegamovies.pics` | TypeScript build & fixtures passed; live extraction unverified | `packages/org.streamix.provider.vegamovies-1.0.0.streamix-ext` |
 
 ### Upstream Attribution and License
 - **Original Implementations**: `megix` / Saurabh Kaperwan ([CSX Repository](https://github.com/SaurabhKaperwan/CSX))
@@ -207,16 +207,6 @@ To host the Streamix native repository on GitHub Pages or GitHub Raw:
    ```text
    https://<owner>.github.io/<repo>/repository.json
    ```
-
----
-
-## CloudStream-Compatible Extensions & Single Repository URL
-
-The lab also includes a CloudStream 3 compatible subproject in [`cloudstream-compatible/`](./cloudstream-compatible/README.md) hosting `.cs3` packages:
-- **Single CloudStream Repository URL**:
-  ```text
-  https://raw.githubusercontent.com/Swagsaiiff/streamix-extension-lab/builds/repo.json
-  ```
 
 ---
 

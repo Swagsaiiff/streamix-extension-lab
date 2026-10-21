@@ -25,7 +25,8 @@ import {
   extractImdbId,
   stripHtmlTags,
   extractHubCloudSources,
-  extractGdflixSources
+  extractGdflixSources,
+  isVideoStreamUrl
 } from '../../../sdk/src/index.ts';
 
 interface VegaHit {
@@ -253,7 +254,7 @@ export class VegaMoviesExtension implements StreamixExtension {
       sources = await extractHubCloudSources(targetUrl, this.context?.fetch);
     } else if (targetUrl.includes('gdflix') || targetUrl.includes('gdlink')) {
       sources = await extractGdflixSources(targetUrl, this.context?.fetch);
-    } else if (targetUrl.startsWith('http')) {
+    } else if (targetUrl.startsWith('http') && isVideoStreamUrl(targetUrl)) {
       sources.push({
         url: targetUrl,
         quality: '1080p',

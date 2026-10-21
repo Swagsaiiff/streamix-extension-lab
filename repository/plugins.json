@@ -5,19 +5,19 @@
     "version": "1.0.0",
     "description": "Reference extension repository for Streamix Desktop extension lab testing",
     "manifestVersion": 1,
-    "homepageUrl": "https://github.com/Swagsaiiff/streamix-desktop/tree/main/streamix-extension-lab"
+    "homepageUrl": "https://github.com/Swagsaiiff/streamix-extension-lab"
   },
-  "updatedAt": "2026-10-21T11:23:18.831Z",
+  "updatedAt": "2026-10-21T11:52:53.154Z",
   "extensions": [
     {
       "id": "org.streamix.provider.bollyflix",
       "displayName": "BollyFlix",
       "version": "1.0.0",
       "streamixApiVersion": "^1.0.0",
-      "description": "High Quality Movies and Web Series up to 4K in Hindi and English. Ported from CSX Bollyflix.",
+      "description": "High Quality Movies and Web Series up to 4K in Hindi and English. Derived from logic by megix.",
       "author": {
         "name": "megix / Streamix Team",
-        "url": "https://github.com/SaurabhKaperwan/CSX"
+        "url": "https://github.com/Swagsaiiff/streamix-extension-lab"
       },
       "contentTypes": [
         "movie",
@@ -29,13 +29,13 @@
         "en"
       ],
       "packageUrl": "packages/org.streamix.provider.bollyflix-1.0.0.streamix-ext",
-      "packageSha256": "14854dbd056b92650b57b831dea6ff96891fd17d29ad3a61b4b005ae025c549a",
-      "packageSizeBytes": 12986,
+      "packageSha256": "fd17e79bae7d6e01df1234f1c96d1de213df7d38405495e862031751dfb838f3",
+      "packageSizeBytes": 13004,
       "permissions": [
         "network:fetch",
         "storage:local"
       ],
-      "releaseDate": "2026-10-21T11:23:18.825Z",
+      "releaseDate": "2026-10-21T11:52:53.148Z",
       "icon": "assets/icon.png"
     },
     {
@@ -43,10 +43,10 @@
       "displayName": "CineStream",
       "version": "1.0.0",
       "streamixApiVersion": "^1.0.0",
-      "description": "Comprehensive Stremio & Cinemeta Catalog & Stream Provider for Movies, Series, Anime, and AsianDrama. Ported from CSX CineStream.",
+      "description": "Comprehensive Stremio & Cinemeta Catalog & Stream Provider for Movies, Series, Anime, and AsianDrama. Derived from logic by megix.",
       "author": {
         "name": "megix / Streamix Team",
-        "url": "https://github.com/SaurabhKaperwan/CSX"
+        "url": "https://github.com/Swagsaiiff/streamix-extension-lab"
       },
       "contentTypes": [
         "movie",
@@ -58,13 +58,13 @@
         "hi"
       ],
       "packageUrl": "packages/org.streamix.provider.cinestream-1.0.0.streamix-ext",
-      "packageSha256": "cc90d6e7c038c79d2bb40093e50ca0e8868cf7e6280b1f7acb779de06fa40728",
-      "packageSizeBytes": 22781,
+      "packageSha256": "317d67896a32107522263c25ac7952fa222f3ad7da6958f501bbffac57bdeb72",
+      "packageSizeBytes": 22862,
       "permissions": [
         "network:fetch",
         "storage:local"
       ],
-      "releaseDate": "2026-10-21T11:23:18.827Z",
+      "releaseDate": "2026-10-21T11:52:53.150Z",
       "icon": "assets/icon.png"
     },
     {
@@ -72,10 +72,10 @@
       "displayName": "MoviesDrive",
       "version": "1.0.0",
       "streamixApiVersion": "^1.0.0",
-      "description": "High Quality Movies and TV Shows up to 4K in Hindi and English. Ported from CSX MoviesDrive.",
+      "description": "High Quality Movies and TV Shows up to 4K in Hindi and English. Derived from logic by megix.",
       "author": {
         "name": "megix / Streamix Team",
-        "url": "https://github.com/SaurabhKaperwan/CSX"
+        "url": "https://github.com/Swagsaiiff/streamix-extension-lab"
       },
       "contentTypes": [
         "movie",
@@ -87,13 +87,13 @@
         "en"
       ],
       "packageUrl": "packages/org.streamix.provider.moviesdrive-1.0.0.streamix-ext",
-      "packageSha256": "75035c82dada637ddb12c0a8f6fc684ff08e51ec6df5e6320a114cf7c842b346",
-      "packageSizeBytes": 23217,
+      "packageSha256": "f2ad6355377eb6f04870ab47ec794418a1a6de427dc921a58e76a5fd885d8a41",
+      "packageSizeBytes": 23225,
       "permissions": [
         "network:fetch",
         "storage:local"
       ],
-      "releaseDate": "2026-10-21T11:23:18.829Z",
+      "releaseDate": "2026-10-21T11:52:53.151Z",
       "icon": "assets/icon.png"
     },
     {
@@ -101,10 +101,10 @@
       "displayName": "Moviesmod",
       "version": "1.0.0",
       "streamixApiVersion": "^1.0.0",
-      "description": "High Quality Movies and Series in Multi-Audio (Hindi, English). Includes TopMovies mirror. Ported from CSX Moviesmod.",
+      "description": "High Quality Movies and Series in Multi-Audio (Hindi, English). Derived from logic by megix.",
       "author": {
         "name": "megix / Streamix Team",
-        "url": "https://github.com/SaurabhKaperwan/CSX"
+        "url": "https://github.com/Swagsaiiff/streamix-extension-lab"
       },
       "contentTypes": [
         "movie",
@@ -116,13 +116,13 @@
         "en"
       ],
       "packageUrl": "packages/org.streamix.provider.moviesmod-1.0.0.streamix-ext",
-      "packageSha256": "709b7f171c0b1f882cfd706c752cbd54a3d4515d25d1bc210aad59a8b38407e0",
-      "packageSizeBytes": 5808,
+      "packageSha256": "76bbf60df77126ba7f94949f0fb78ea96b98c432d460d7361271659466b395bd",
+      "packageSizeBytes": 5812,
       "permissions": [
         "network:fetch",
         "storage:local"
       ],
-      "releaseDate": "2026-10-21T11:23:18.830Z",
+      "releaseDate": "2026-10-21T11:52:53.152Z",
       "icon": "assets/icon.png"
     },
     {
@@ -133,7 +133,7 @@
       "description": "Reference development sample provider for testing extension SDK interfaces using open public test media and controlled fixtures.",
       "author": {
         "name": "Streamix Core Team",
-        "url": "https://github.com/recloudstream/cloudstream"
+        "url": "https://github.com/Swagsaiiff/streamix-extension-lab"
       },
       "contentTypes": [
         "movie",
@@ -143,13 +143,13 @@
         "en"
       ],
       "packageUrl": "packages/org.streamix.provider.sample-1.0.0.streamix-ext",
-      "packageSha256": "0aad918c912c937c5bf30703b21e8a1ae57aa506aa800867a3849b27a968718d",
-      "packageSizeBytes": 3734,
+      "packageSha256": "b3ddaad7ec06e4a026483cf3a6b52000391c3d40af3b053a106cb9a15804adbb",
+      "packageSizeBytes": 3729,
       "permissions": [
         "network:fetch",
         "storage:local"
       ],
-      "releaseDate": "2026-10-21T11:23:18.830Z",
+      "releaseDate": "2026-10-21T11:52:53.153Z",
       "icon": "assets/icon.png"
     },
     {
@@ -157,10 +157,10 @@
       "displayName": "VegaMovies",
       "version": "1.0.0",
       "streamixApiVersion": "^1.0.0",
-      "description": "High Quality Movies and Series up to 4K in Hindi, English, and South Dubbed. Includes Rogmovies and LuxMovies. Ported from CSX VegaMovies.",
+      "description": "High Quality Movies and Series up to 4K in Hindi, English, and South Dubbed. Derived from logic by megix.",
       "author": {
         "name": "megix / Streamix Team",
-        "url": "https://github.com/SaurabhKaperwan/CSX"
+        "url": "https://github.com/Swagsaiiff/streamix-extension-lab"
       },
       "contentTypes": [
         "movie",
@@ -172,13 +172,13 @@
         "en"
       ],
       "packageUrl": "packages/org.streamix.provider.vegamovies-1.0.0.streamix-ext",
-      "packageSha256": "cdc710cdbd06a0475ee6779dafba2aaecfd2f6642b94d2a64991c4e813ce892e",
-      "packageSizeBytes": 17972,
+      "packageSha256": "d74c62c38978ce9993735d37458dd1cb56dac22c4b087ecfacdec59df1a35c9b",
+      "packageSizeBytes": 17971,
       "permissions": [
         "network:fetch",
         "storage:local"
       ],
-      "releaseDate": "2026-10-21T11:23:18.831Z",
+      "releaseDate": "2026-10-21T11:52:53.154Z",
       "icon": "assets/icon.jpg"
     }
   ]

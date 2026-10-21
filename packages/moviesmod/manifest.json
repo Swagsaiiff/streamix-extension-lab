@@ -2,10 +2,10 @@
   "id": "org.streamix.provider.moviesmod",
   "displayName": "Moviesmod",
   "version": "1.0.0",
-  "description": "High Quality Movies and Series in Multi-Audio (Hindi, English). Includes TopMovies mirror. Ported from CSX Moviesmod.",
+  "description": "High Quality Movies and Series in Multi-Audio (Hindi, English). Derived from logic by megix.",
   "author": {
     "name": "megix / Streamix Team",
-    "url": "https://github.com/SaurabhKaperwan/CSX"
+    "url": "https://github.com/Swagsaiiff/streamix-extension-lab"
   },
   "streamixApiVersion": "^1.0.0",
   "entrypoint": "src/index.ts",
@@ -24,5 +24,5 @@
   ],
   "icon": "assets/icon.png",
   "repositoryUrl": "https://github.com/Swagsaiiff/streamix-extension-lab",
-  "homepageUrl": "https://github.com/SaurabhKaperwan/CSX"
+  "homepageUrl": "https://github.com/Swagsaiiff/streamix-extension-lab/tree/main/packages/moviesmod"
 }

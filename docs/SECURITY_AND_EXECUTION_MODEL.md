@@ -6,7 +6,7 @@ This document outlines the security architecture, threat model, permission syste
 
 ## 1. Threat Model & Untrusted Inputs
 
-In a decentralized extension ecosystem like CloudStream or Streamix:
+In a decentralized native extension ecosystem like Streamix (architecturally inspired by modular extension designs like CloudStream):
 - Extensions are authored by third-party community developers.
 - Repositories host user-contributed plugins over public HTTP/HTTPS endpoints.
 - Attack vectors include:

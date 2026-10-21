@@ -239,9 +239,11 @@ This creates `packages/org.streamix.provider.myprovider-1.0.0.streamix-ext` and 
 
 ---
 
-## 6. Porting CloudStream Providers
+## 6. Porting Providers from Upstream Ecosystems
 
-When porting a provider from CloudStream (CSX repo):
-1. **Inspect the Kotlin Source**: Look at the original extension Kotlin file in the CSX repository to find the genuine base URLs, search endpoints, and stream extractors.
-2. **Replicate Headers Exactly**: CloudStream providers frequently depend on exact `User-Agent`, `Referer`, and `Origin` headers. Ensure your `resolveSources()` implementation attaches required headers to `VideoSource.headers`.
-3. **Multi-Audio and Subtitles**: If the provider returns multiple audio tracks or subtitles, map them honestly to `audioTracks` and `subtitles`. Do not drop them or fabricate non-existent tracks.
+When porting a provider into native Streamix TypeScript extensions:
+1. **Inspect the Upstream Source**: Read the actual provider logic (e.g. from CSX or scraper repositories) to understand genuine base URLs, search endpoints, and stream extractors.
+2. **Reimplement in Native TypeScript**: Use Streamix SDK helpers (`fetch`, `extractHubCloudSources`, `extractGdflixSources`, `isVideoStreamUrl`, etc.). Never depend on Android runtimes, Gradle plugins, or CloudStream Java/Kotlin classes.
+3. **Replicate Headers Exactly**: Upstream providers frequently depend on exact `User-Agent`, `Referer`, and `Origin` headers. Ensure your `resolveSources()` implementation attaches required headers to `VideoSource.headers`.
+4. **Direct Video Streams Only**: Only return verified direct stream URLs (`.m3u8`, `.mp4`). Never treat embed URLs, intermediate redirectors, or HTML pages as direct video streams. Throw `SourceUnavailableError` if no direct streams can be resolved.
+5. **Multi-Audio and Subtitles**: If the provider returns multiple audio tracks or subtitles, map them honestly to `audioTracks` and `subtitles`. Do not drop them or fabricate non-existent tracks.

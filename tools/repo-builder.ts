@@ -16,7 +16,7 @@ export const DEFAULT_REPO_METADATA: RepositoryMetadata = {
   version: '1.0.0',
   description: 'Reference extension repository for Streamix Desktop extension lab testing',
   manifestVersion: 1,
-  homepageUrl: 'https://github.com/Swagsaiiff/streamix-desktop/tree/main/streamix-extension-lab'
+  homepageUrl: 'https://github.com/Swagsaiiff/streamix-extension-lab'
 };
 
 /**

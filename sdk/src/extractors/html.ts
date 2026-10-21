@@ -74,3 +74,24 @@ export function extractBaseUrl(url: string): string {
     return url;
   }
 }
+
+export function isVideoStreamUrl(url: string): boolean {
+  if (!url || typeof url !== 'string') return false;
+  const clean = url.toLowerCase().split('?')[0];
+  if (
+    clean.includes('/embed/') ||
+    clean.includes('/video/') ||
+    clean.endsWith('.html') ||
+    clean.endsWith('.htm') ||
+    clean.endsWith('.php')
+  ) {
+    return false;
+  }
+  return (
+    clean.endsWith('.m3u8') ||
+    clean.endsWith('.mp4') ||
+    clean.endsWith('.mkv') ||
+    clean.endsWith('.webm') ||
+    url.includes('pixeldrain.com/api/file/')
+  );
+}

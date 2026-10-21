@@ -5,7 +5,7 @@
   "description": "Reference development sample provider for testing extension SDK interfaces using open public test media and controlled fixtures.",
   "author": {
     "name": "Streamix Core Team",
-    "url": "https://github.com/recloudstream/cloudstream"
+    "url": "https://github.com/Swagsaiiff/streamix-extension-lab"
   },
   "streamixApiVersion": "^1.0.0",
   "entrypoint": "src/index.ts",
@@ -21,6 +21,6 @@
     "storage:local"
   ],
   "icon": "assets/icon.png",
-  "repositoryUrl": "https://github.com/Swagsaiiff/streamix-desktop",
-  "homepageUrl": "https://github.com/Swagsaiiff/streamix-desktop/tree/main/streamix-extension-lab"
+  "repositoryUrl": "https://github.com/Swagsaiiff/streamix-extension-lab",
+  "homepageUrl": "https://github.com/Swagsaiiff/streamix-extension-lab/tree/main/examples/sample-provider"
 }
