@@ -1,0 +1,8 @@
+{
+  "name": "Streamix Providers",
+  "description": "CloudStream-compatible provider extensions",
+  "manifestVersion": 1,
+  "pluginLists": [
+    "https://raw.githubusercontent.com/Swagsaiiff/streamix-extension-lab/builds/plugins.json"
+  ]
+}
