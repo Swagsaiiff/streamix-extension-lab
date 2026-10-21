@@ -66,9 +66,9 @@ In `packages/desktop/src/`:
 
 In `packages/client/src/pages/Settings.jsx`:
 - **Repositories Tab**:
-  - Allows users to add repository URLs (e.g. `https://raw.githubusercontent.com/.../plugins.json`).
-  - Fetches repository index and lists available plugins.
-  - Shows plugin description, version, author, and declared permissions.
+  - Allows users to add a single repository URL (e.g. `https://raw.githubusercontent.com/Swagsaiiff/streamix-extension-lab/main/repository/repository.json`).
+  - Automatically discovers provider catalog (`plugins.json`) and lists available extensions.
+  - Shows plugin display name, version, author, content types, and declared permissions.
 - **Installed Extensions Tab**:
   - Displays currently installed extensions.
   - Displays status badges, update notifications, and toggle switches.

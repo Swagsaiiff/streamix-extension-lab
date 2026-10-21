@@ -5,9 +5,13 @@
     "version": "1.0.0",
     "description": "Reference extension repository for Streamix Desktop extension lab testing",
     "manifestVersion": 1,
-    "homepageUrl": "https://github.com/Swagsaiiff/streamix-extension-lab"
+    "homepageUrl": "https://github.com/Swagsaiiff/streamix-extension-lab",
+    "pluginLists": [
+      "plugins.json"
+    ],
+    "pluginsUrl": "plugins.json"
   },
-  "updatedAt": "2026-10-21T11:52:53.154Z",
+  "updatedAt": "2026-10-21T14:04:23.931Z",
   "extensions": [
     {
       "id": "org.streamix.provider.bollyflix",
@@ -29,13 +33,13 @@
         "en"
       ],
       "packageUrl": "packages/org.streamix.provider.bollyflix-1.0.0.streamix-ext",
-      "packageSha256": "fd17e79bae7d6e01df1234f1c96d1de213df7d38405495e862031751dfb838f3",
+      "packageSha256": "5069d997563fcf93af84c81a6e4502e832873522c40991bf27398c38d8fde9b2",
       "packageSizeBytes": 13004,
       "permissions": [
         "network:fetch",
         "storage:local"
       ],
-      "releaseDate": "2026-10-21T11:52:53.148Z",
+      "releaseDate": "2026-10-21T14:04:23.924Z",
       "icon": "assets/icon.png"
     },
     {
@@ -58,13 +62,13 @@
         "hi"
       ],
       "packageUrl": "packages/org.streamix.provider.cinestream-1.0.0.streamix-ext",
-      "packageSha256": "317d67896a32107522263c25ac7952fa222f3ad7da6958f501bbffac57bdeb72",
+      "packageSha256": "108f2a536c062a386dfcba5f6342a0ad1de63165b04777c6345cc9defee0a20d",
       "packageSizeBytes": 22862,
       "permissions": [
         "network:fetch",
         "storage:local"
       ],
-      "releaseDate": "2026-10-21T11:52:53.150Z",
+      "releaseDate": "2026-10-21T14:04:23.927Z",
       "icon": "assets/icon.png"
     },
     {
@@ -87,13 +91,13 @@
         "en"
       ],
       "packageUrl": "packages/org.streamix.provider.moviesdrive-1.0.0.streamix-ext",
-      "packageSha256": "f2ad6355377eb6f04870ab47ec794418a1a6de427dc921a58e76a5fd885d8a41",
+      "packageSha256": "089272998fb7682e251880f5e739d002272e7432da0845d2f8d601833712b039",
       "packageSizeBytes": 23225,
       "permissions": [
         "network:fetch",
         "storage:local"
       ],
-      "releaseDate": "2026-10-21T11:52:53.151Z",
+      "releaseDate": "2026-10-21T14:04:23.928Z",
       "icon": "assets/icon.png"
     },
     {
@@ -116,13 +120,13 @@
         "en"
       ],
       "packageUrl": "packages/org.streamix.provider.moviesmod-1.0.0.streamix-ext",
-      "packageSha256": "76bbf60df77126ba7f94949f0fb78ea96b98c432d460d7361271659466b395bd",
+      "packageSha256": "d91fec089e85dd5dbc3001f5d01f2197eab30fc0f63e2c105de71b95e995d8e2",
       "packageSizeBytes": 5812,
       "permissions": [
         "network:fetch",
         "storage:local"
       ],
-      "releaseDate": "2026-10-21T11:52:53.152Z",
+      "releaseDate": "2026-10-21T14:04:23.929Z",
       "icon": "assets/icon.png"
     },
     {
@@ -143,13 +147,13 @@
         "en"
       ],
       "packageUrl": "packages/org.streamix.provider.sample-1.0.0.streamix-ext",
-      "packageSha256": "b3ddaad7ec06e4a026483cf3a6b52000391c3d40af3b053a106cb9a15804adbb",
+      "packageSha256": "6c9d04fb66898c1b85a8fcc95a9404ea9c353b0c1330bed166f229d9a60b0f69",
       "packageSizeBytes": 3729,
       "permissions": [
         "network:fetch",
         "storage:local"
       ],
-      "releaseDate": "2026-10-21T11:52:53.153Z",
+      "releaseDate": "2026-10-21T14:04:23.930Z",
       "icon": "assets/icon.png"
     },
     {
@@ -172,13 +176,13 @@
         "en"
       ],
       "packageUrl": "packages/org.streamix.provider.vegamovies-1.0.0.streamix-ext",
-      "packageSha256": "d74c62c38978ce9993735d37458dd1cb56dac22c4b087ecfacdec59df1a35c9b",
+      "packageSha256": "0a709519583b316906d7e4ed9dfedba85ae12932f5f3ff1c55d16aa6e8a54e3b",
       "packageSizeBytes": 17971,
       "permissions": [
         "network:fetch",
         "storage:local"
       ],
-      "releaseDate": "2026-10-21T11:52:53.154Z",
+      "releaseDate": "2026-10-21T14:04:23.931Z",
       "icon": "assets/icon.jpg"
     }
   ]

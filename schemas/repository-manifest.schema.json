@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StreamixExtensionRepositoryManifest",
+  "description": "Schema definition for Streamix extension repository manifest (repository.json)",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "version",
+    "manifestVersion"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9_-]+)+$",
+      "description": "Unique reverse-DNS repository identifier"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable display name of the repository"
+    },
+    "version": {
+      "type": "string",
+      "description": "Repository manifest version string (SemVer)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the repository and its published providers"
+    },
+    "manifestVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Repository manifest schema specification version"
+    },
+    "homepageUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the repository source website or project"
+    },
+    "pluginLists": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of URLs or relative paths pointing to plugin catalog indices (plugins.json)"
+    },
+    "pluginsUrl": {
+      "type": "string",
+      "description": "Direct URL or relative path to the plugin catalog index (plugins.json)"
+    }
+  }
+}

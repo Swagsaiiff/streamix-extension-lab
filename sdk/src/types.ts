@@ -163,6 +163,8 @@ export interface RepositoryMetadata {
   description?: string;
   manifestVersion: number;
   homepageUrl?: string;
+  pluginLists?: string[];
+  pluginsUrl?: string;
 }
 
 export interface ExtensionIndexEntry {

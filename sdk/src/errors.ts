@@ -99,3 +99,18 @@ export class PackageIntegrityError extends ExtensionError {
     this.actualSha256 = actualSha256;
   }
 }
+
+export class RepositoryError extends ExtensionError {
+  constructor(message: string, code: string = 'REPOSITORY_ERROR', extensionId?: string) {
+    super(message, code, extensionId);
+  }
+}
+
+export class RepositoryValidationError extends RepositoryError {
+  public readonly errors: string[];
+
+  constructor(errors: string[]) {
+    super(`Repository validation failed: ${errors.join('; ')}`, 'REPOSITORY_VALIDATION_ERROR');
+    this.errors = errors;
+  }
+}

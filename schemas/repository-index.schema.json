@@ -36,6 +36,15 @@
         "homepageUrl": {
           "type": "string",
           "format": "uri"
+        },
+        "pluginLists": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of URLs or relative paths pointing to plugin catalog indices (plugins.json)"
+        },
+        "pluginsUrl": {
+          "type": "string",
+          "description": "Direct URL or relative path to the plugin catalog index (plugins.json)"
         }
       }
     },

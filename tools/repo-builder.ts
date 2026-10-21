@@ -1,13 +1,19 @@
 import { readFile, writeFile, mkdir, copyFile, readdir, stat } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { resolve, join, basename } from 'node:path';
-import { computeSha256, unpackZipArchive } from './packager.ts';
+import { computeSha256, unpackZipArchive, packageExtension } from './packager.ts';
 import type { RepositoryIndex, ExtensionIndexEntry, RepositoryMetadata } from '../sdk/src/types.ts';
-import { assertValidManifest } from '../sdk/src/validator.ts';
+import {
+  assertValidManifest,
+  assertValidRepositoryManifest,
+  validateRepositoryIndex
+} from '../sdk/src/index.ts';
 
 export interface RepoBuilderOptions {
   repoDir?: string;
   packagesDir?: string;
+  autoPackage?: boolean;
+  sourceDirs?: string[];
 }
 
 export const DEFAULT_REPO_METADATA: RepositoryMetadata = {
@@ -16,85 +22,89 @@ export const DEFAULT_REPO_METADATA: RepositoryMetadata = {
   version: '1.0.0',
   description: 'Reference extension repository for Streamix Desktop extension lab testing',
   manifestVersion: 1,
-  homepageUrl: 'https://github.com/Swagsaiiff/streamix-extension-lab'
+  homepageUrl: 'https://github.com/Swagsaiiff/streamix-extension-lab',
+  pluginLists: ['plugins.json'],
+  pluginsUrl: 'plugins.json'
 };
 
-/**
- * Validates a repository index against basic structural requirements.
- */
-export function validateRepositoryIndex(index: unknown): { valid: boolean; errors: string[] } {
-  const errors: string[] = [];
-  if (!index || typeof index !== 'object') {
-    return { valid: false, errors: ['Repository index must be a non-null object'] };
-  }
-
-  const idx = index as Record<string, unknown>;
-  if (!idx.repository || typeof idx.repository !== 'object') {
-    errors.push("Missing 'repository' metadata object");
-  } else {
-    const repo = idx.repository as Record<string, unknown>;
-    if (!repo.id || typeof repo.id !== 'string') errors.push("Repository missing 'id'");
-    if (!repo.name || typeof repo.name !== 'string') errors.push("Repository missing 'name'");
-    if (typeof repo.manifestVersion !== 'number') errors.push("Repository missing numeric 'manifestVersion'");
-  }
-
-  if (!idx.updatedAt || typeof idx.updatedAt !== 'string') {
-    errors.push("Missing 'updatedAt' ISO timestamp string");
-  }
-
-  if (!Array.isArray(idx.extensions)) {
-    errors.push("Missing 'extensions' array");
-  } else {
-    for (let i = 0; i < idx.extensions.length; i++) {
-      const ext = idx.extensions[i];
-      if (!ext || typeof ext !== 'object') {
-        errors.push(`Extension at index ${i} must be an object`);
-        continue;
-      }
-      if (!ext.id || typeof ext.id !== 'string') errors.push(`Extension at index ${i} missing 'id'`);
-      if (!ext.version || typeof ext.version !== 'string') errors.push(`Extension at index ${i} missing 'version'`);
-      if (!ext.packageUrl || typeof ext.packageUrl !== 'string') errors.push(`Extension at index ${i} missing 'packageUrl'`);
-      if (!ext.packageSha256 || typeof ext.packageSha256 !== 'string' || ext.packageSha256.length !== 64) {
-        errors.push(`Extension at index ${i} invalid 'packageSha256'`);
-      }
-      if (typeof ext.packageSizeBytes !== 'number' || ext.packageSizeBytes <= 0) {
-        errors.push(`Extension at index ${i} invalid 'packageSizeBytes'`);
-      }
-    }
-  }
-
-  return { valid: errors.length === 0, errors };
-}
+export { validateRepositoryIndex };
 
 /**
  * Builds the repository metadata, plugins.json, and copies packages into the repository directory.
+ * Automatically discovers source provider packages and packages missing archives.
  */
 export async function buildRepository(options?: RepoBuilderOptions): Promise<RepositoryIndex> {
   const repoDir = resolve(process.cwd(), options?.repoDir || 'repository');
   const packagesDir = resolve(process.cwd(), options?.packagesDir || 'packages');
   const targetPackagesDir = join(repoDir, 'packages');
+  const autoPackage = options?.autoPackage !== false;
+  const sourceDirs = options?.sourceDirs || ['packages', 'examples'];
 
   await mkdir(repoDir, { recursive: true });
+  await mkdir(packagesDir, { recursive: true });
   await mkdir(targetPackagesDir, { recursive: true });
 
-  // Read or create repository.json
+  // 1. Auto-discover provider directories and package any missing or unbuilt providers
+  if (autoPackage) {
+    for (const srcDirName of sourceDirs) {
+      const srcDirPath = resolve(process.cwd(), srcDirName);
+      if (!existsSync(srcDirPath)) continue;
+
+      const entries = await readdir(srcDirPath, { withFileTypes: true });
+      for (const entry of entries) {
+        if (!entry.isDirectory()) continue;
+        const providerPath = join(srcDirPath, entry.name);
+        const manifestPath = join(providerPath, 'manifest.json');
+
+        if (existsSync(manifestPath)) {
+          try {
+            const raw = await readFile(manifestPath, 'utf-8');
+            const manifest = JSON.parse(raw);
+            assertValidManifest(manifest);
+
+            const expectedPackageName = `${manifest.id}-${manifest.version}.streamix-ext`;
+            const expectedPackagePath = join(packagesDir, expectedPackageName);
+
+            if (!existsSync(expectedPackagePath)) {
+              await packageExtension(providerPath, packagesDir);
+            }
+          } catch (err) {
+            throw new Error(`Failed to validate or package provider at '${providerPath}': ${(err as Error).message}`);
+          }
+        }
+      }
+    }
+  }
+
+  // 2. Read or initialize repository.json
   const repoJsonPath = join(repoDir, 'repository.json');
-  let repoMeta: RepositoryMetadata = DEFAULT_REPO_METADATA;
+  let repoMeta: RepositoryMetadata = { ...DEFAULT_REPO_METADATA };
   if (existsSync(repoJsonPath)) {
     try {
       const raw = await readFile(repoJsonPath, 'utf-8');
-      repoMeta = JSON.parse(raw);
+      const loaded = JSON.parse(raw);
+      repoMeta = {
+        ...loaded,
+        pluginLists: loaded.pluginLists && loaded.pluginLists.length > 0
+          ? loaded.pluginLists
+          : (DEFAULT_REPO_METADATA.pluginLists || ['plugins.json']),
+        pluginsUrl: loaded.pluginsUrl || DEFAULT_REPO_METADATA.pluginsUrl || 'plugins.json'
+      };
     } catch {
       // Use default if corrupted or missing
     }
-  } else {
-    await writeFile(repoJsonPath, JSON.stringify(DEFAULT_REPO_METADATA, null, 2), 'utf-8');
   }
 
-  // Find all .streamix-ext packages
+  assertValidRepositoryManifest(repoMeta);
+  await writeFile(repoJsonPath, JSON.stringify(repoMeta, null, 2), 'utf-8');
+
+  // 3. Find and index all .streamix-ext packages
   const indexedExtensions: ExtensionIndexEntry[] = [];
   if (existsSync(packagesDir)) {
     const files = await readdir(packagesDir);
+    // Sort files to ensure deterministic index ordering
+    files.sort();
+
     for (const file of files) {
       if (!file.endsWith('.streamix-ext') && !file.endsWith('.zip')) continue;
 
@@ -114,8 +124,7 @@ export async function buildRepository(options?: RepoBuilderOptions): Promise<Rep
       const unpacked = unpackZipArchive(fileBuf);
       const manifestBuf = unpacked.get('manifest.json');
       if (!manifestBuf) {
-        console.warn(`[RepoBuilder] Skipping ${file}: no manifest.json found in package`);
-        continue;
+        throw new Error(`Package '${file}' is corrupted or missing manifest.json`);
       }
 
       const manifest = JSON.parse(manifestBuf.toString('utf-8'));
@@ -142,6 +151,7 @@ export async function buildRepository(options?: RepoBuilderOptions): Promise<Rep
     }
   }
 
+  // 4. Generate and validate plugins.json
   const repoIndex: RepositoryIndex = {
     repository: repoMeta,
     updatedAt: new Date().toISOString(),
@@ -175,6 +185,7 @@ async function main() {
     const index = await buildRepository({ repoDir, packagesDir });
     console.log(`\nRepository built successfully!`);
     console.log(`Repository Name: ${index.repository.name} (${index.repository.id})`);
+    console.log(`Catalog Entrypoint: ${index.repository.pluginLists?.[0] || 'plugins.json'}`);
     console.log(`Total Extensions Indexed: ${index.extensions.length}`);
     for (const ext of index.extensions) {
       console.log(`  - [${ext.id} v${ext.version}] ${ext.displayName} -> ${ext.packageUrl} (SHA: ${ext.packageSha256.substring(0, 12)}...)`);

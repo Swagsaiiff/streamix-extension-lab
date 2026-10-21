@@ -189,24 +189,42 @@ All 5 providers from the upstream CSX repository have been ported into the nativ
 
 ---
 
-## Native Streamix Repository Manifest & Index
+---
 
-The native Streamix repository is generated directly from build artifacts in `repository/`:
-- **Repository Manifest**: `repository/repository.json`
-- **Extension Index**: `repository/plugins.json` (lists metadata, versions, SHA-256 checksums, and package byte sizes)
-- **Built Packages**: `repository/packages/*.streamix-ext`
+## One-URL Streamix Extension Repository Architecture
 
-### Hosting Instructions:
-To host the Streamix native repository on GitHub Pages or GitHub Raw:
-1. Push `repository/` to GitHub (`main` or `gh-pages` branch).
-2. The single Streamix repository manifest URL is:
-   ```text
-   https://raw.githubusercontent.com/<owner>/<repo>/main/repository/repository.json
-   ```
-   Or GitHub Pages URL:
-   ```text
-   https://<owner>.github.io/<repo>/repository.json
-   ```
+Streamix Desktop uses a centralized, single-URL repository discovery architecture:
+- **Single Public Repository URL**:
+  ```text
+  https://raw.githubusercontent.com/Swagsaiiff/streamix-extension-lab/main/repository/repository.json
+  ```
+  *(Or GitHub Pages URL: `https://swagsaiiff.github.io/streamix-extension-lab/repository.json`)*
+
+### Discovery & Catalog Architecture
+```text
+User enters ONE Repository URL:
+https://.../repository/repository.json
+            │
+            ▼ (reads `pluginLists: ["plugins.json"]`)
+Discovers Provider Catalog:
+https://.../repository/plugins.json
+            │
+            ├── BollyFlix      ──► packages/org.streamix.provider.bollyflix-1.0.0.streamix-ext
+            ├── CineStream     ──► packages/org.streamix.provider.cinestream-1.0.0.streamix-ext
+            ├── MoviesDrive    ──► packages/org.streamix.provider.moviesdrive-1.0.0.streamix-ext
+            ├── Moviesmod      ──► packages/org.streamix.provider.moviesmod-1.0.0.streamix-ext
+            ├── VegaMovies     ──► packages/org.streamix.provider.vegamovies-1.0.0.streamix-ext
+            └── Sample Fixture ──► packages/org.streamix.provider.sample-1.0.0.streamix-ext
+```
+
+1. **Repository Manifest (`repository/repository.json`)**:
+   Defines repository identification (`id: "org.streamix.repository.lab"`), version, and declares the catalog entrypoint via `pluginLists: ["plugins.json"]`.
+2. **Provider Catalog (`repository/plugins.json`)**:
+   Lists every published provider with metadata, version, declared permissions, exact file size in bytes, and cryptographic SHA-256 integrity hash (`packageSha256`).
+3. **Package URL Resolution**:
+   Package URLs in the catalog are relative to the catalog (e.g. `packages/org.streamix.provider.bollyflix-1.0.0.streamix-ext`). The Streamix SDK `resolveUrl()` safely resolves them against `plugins.json` base URL to `https://.../repository/packages/...`.
+4. **Adding New Providers**:
+   To publish a new provider, create `packages/<name>` containing `manifest.json` and `src/index.ts`. Running `npm run build:repo` automatically discovers the new provider, builds its `.streamix-ext` package, calculates its real SHA-256 hash and size, and indexes it into `plugins.json`. No manual script additions or hardcoded provider lists are needed.
 
 ---
 
